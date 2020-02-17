@@ -1,9 +1,10 @@
 // C++ program for insertion sort  
 #include <iostream> 
+#include <chrono>
 
 using namespace std;
 
-
+// First draft
 //https://www.geeksforgeeks.org/insertion-sort/
 /* Function to sort an array using insertion sort*/
 void insertionSort(int arr[], int n)
@@ -68,17 +69,35 @@ int main()
     int arr[] = { 12, 11, 13, 5, 6 };
     int n = sizeof(arr) / sizeof(arr[0]);
 
-    insertionSort(arr, n);
-    printArray(arr, n);
+    auto start = chrono::high_resolution_clock::now();
 
+    insertionSort(arr, n);
+
+    auto t2 = std::chrono::high_resolution_clock::now();
+
+    auto int_ms = std::chrono::duration_cast<std::chrono::microseconds>(t2 - start);
+   
+    std::chrono::duration<unsigned int, std::micro> int_usec = int_ms;
+    printArray(arr, n);
+    cout << "Linear insertion sort took :" << int_usec.count() << endl;
 
     int arr2[] = { 12, 56, 1, 67, 45, 8, 82, 16, 63, 23 };
     int n2 = sizeof(arr2) / sizeof(arr2[0]), i;
+    
+    start = chrono::high_resolution_clock::now();
+
     BinaryInsertionSort(arr2, n2);
+
+    t2 = std::chrono::high_resolution_clock::now();
+    int_ms = std::chrono::duration_cast<std::chrono::microseconds>(t2 - start);
+    
+    int_usec = int_ms;
+    
     cout << "Sorted array is : \n";
     for (i = 0; i < n2; i++)
         cout << arr2[i] << "\t";
 
-
+    cout << endl;
+    cout << "Binary insertion sort took :" << int_usec.count() << endl;
     return 0;
 }
